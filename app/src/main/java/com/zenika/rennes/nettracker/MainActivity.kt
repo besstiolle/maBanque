@@ -3,6 +3,7 @@ package com.zenika.rennes.nettracker
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -18,6 +19,13 @@ class MainActivity : AppCompatActivity() {
         initNetMeter()
 
         checkIsOnline()
+
+        //Plug button click event
+        val button: Button = findViewById(R.id.button_refresh)
+        button.setOnClickListener {
+            checkIsOnline()
+        }
+
     }
 
     private fun initNetMeter(){
