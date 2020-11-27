@@ -1,6 +1,7 @@
 package com.zenika.rennes.nettracker
 
 import android.content.Context
+import android.net.ConnectivityManager
 
 interface NetMeter {
 
@@ -16,9 +17,17 @@ interface NetMeter {
     abstract fun getCapabilities(context: Context): MutableCollection<CharSequence>
 
     /**
+     * @Return current type of Network or CharSequence "N/A"
+     */
+    abstract fun getCurrentNetwork(context: Context): CharSequence
+
+    /**
      * Return true if connectivity is metered
      */
-    abstract fun isMetered(context: Context): Boolean
+    fun isMetered(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return connectivityManager.isActiveNetworkMetered
+    }
 
     /**
      * Return true if connectivity is metered

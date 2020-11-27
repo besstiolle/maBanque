@@ -44,6 +44,8 @@ class MainActivity : AppCompatActivity() {
 
         val onLine: Boolean = netMeter!!.isOnline(applicationContext)
 
+        val currentNetwork: CharSequence = netMeter!!.getCurrentNetwork(applicationContext)
+
         val capabilities: String = netMeter!!.getCapabilities(applicationContext).joinToString()
 
         val isMetered: Boolean = netMeter!!.isMetered(applicationContext)
@@ -54,7 +56,8 @@ class MainActivity : AppCompatActivity() {
         updateRapport("Results : \n" +
                 "> SDK Version : $sdkVersion \n" +
                 "> Access to Internet :  $onLine \n" +
-                "> Type :  $capabilities \n" +
+                "> Current Co. :  $currentNetwork \n" +
+                "> Co. available :  $capabilities \n" +
                 "> isMetered : $isMetered \n" +
                 "> Signal Strength : $strength")
     }

@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 
 /*
@@ -49,9 +48,29 @@ class NetMeter23 : NetMeter {
 
         return values
     }
+    override fun getCurrentNetwork(context: Context): CharSequence {
 
-    override fun isMetered(context: Context): Boolean {
-        return true;
+        /*val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        connectivityManager?.run {
+            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)?.run {
+                when {
+                    hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
+                        return "WIFI"
+                    }
+                    hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
+                        return "CELLULAR"
+                    }
+                    hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
+                        return "ETHERNET"
+                    }
+                    else -> {
+                        "N/A"
+                    }
+                }
+            }
+        }*/
+        return "Not Implemented"
+
     }
 
     override fun getSignalStrength(applicationContext: Context?): CharSequence{

@@ -15,17 +15,18 @@ class NetMeter16 : NetMeter {
      * Appel API compatible API 23. Current targeted max version : 16
      */
     override fun isOnline(context: Context): Boolean {
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork: android.net.NetworkInfo? = cm.activeNetworkInfo
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: android.net.NetworkInfo? = connectivityManager.activeNetworkInfo
         return activeNetwork?.isConnectedOrConnecting == true
     }
 
     override fun getCapabilities(context: Context): MutableCollection<CharSequence> {
 
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork = cm.activeNetworkInfo
-        val values = mutableListOf<CharSequence>()
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
+       // val activeNetwork = connectivityManager.activeNetworkInfo
+        val values = mutableListOf<CharSequence>("Not Implemented")
+/*
         if (activeNetwork != null) {
             if(activeNetwork.type == ConnectivityManager.TYPE_MOBILE) {
                 values.add("CELLULAR")
@@ -36,13 +37,30 @@ class NetMeter16 : NetMeter {
             if(activeNetwork.type == ConnectivityManager.TYPE_ETHERNET) {
                 values.add("ETHERNET")
             }
-        }
+        }*/
 
         return values
     }
 
-    override fun isMetered(context: Context): Boolean {
-        return true;
+    override fun getCurrentNetwork(context: Context): CharSequence {
+
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = connectivityManager.activeNetworkInfo
+
+        return when (activeNetwork?.type) {
+                ConnectivityManager.TYPE_MOBILE -> {
+                    "CELLULAR"
+                }
+                ConnectivityManager.TYPE_WIFI -> {
+                    "WIFI"
+                }
+                ConnectivityManager.TYPE_ETHERNET -> {
+                    "ETHERNET"
+                }
+                else -> {
+                "N/A"
+            }
+        }
     }
 
     override fun getSignalStrength(applicationContext: Context?): CharSequence{
