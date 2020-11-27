@@ -73,7 +73,7 @@ class NetMeter23 : NetMeter {
 
     }
 
-    override fun getSignalStrength(applicationContext: Context?): CharSequence{
+    override fun getSignalStrength(context: Context): CharSequence{
         return "To_IMPLEMENTS"
     }
 }

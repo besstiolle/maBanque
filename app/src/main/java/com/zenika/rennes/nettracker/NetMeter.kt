@@ -32,5 +32,5 @@ interface NetMeter {
     /**
      * Return true if connectivity is metered
      */
-    abstract fun getSignalStrength(applicationContext: Context?): CharSequence
+    abstract fun getSignalStrength(context: Context): CharSequence
 }
