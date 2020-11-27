@@ -13,5 +13,15 @@ interface NetMeter {
      * @return MutableCollection<String> of type of capabilities
      *
      */
-    abstract fun getCapabilities(context: Context): MutableCollection<String>
+    abstract fun getCapabilities(context: Context): MutableCollection<CharSequence>
+
+    /**
+     * Return true if connectivity is metered
+     */
+    abstract fun isMetered(context: Context): Boolean
+
+    /**
+     * Return true if connectivity is metered
+     */
+    abstract fun getSignalStrength(applicationContext: Context?): CharSequence
 }

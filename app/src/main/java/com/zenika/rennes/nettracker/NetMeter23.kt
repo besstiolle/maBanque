@@ -7,12 +7,15 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 
+/*
+ * Implementation of NetMeter for API 23 -> 30+
+ * Cause of usage "connectivityManager.activeNetwork" (API 23)
+ * Cause of usage "connectivityManager.getNetworkCapabilities" (API 21)
+ * Cause of usage "capabilities.hasTransport" (API 21)
+ */
+@RequiresApi(Build.VERSION_CODES.M)
 class NetMeter23 : NetMeter {
 
-    /**
-     * Version minimal : API 23. Current targeted min version : 16
-     */
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun isOnline(context: Context): Boolean {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
@@ -25,15 +28,10 @@ class NetMeter23 : NetMeter {
         return false
     }
 
-
-    /**
-     * Version minimal : API 23. Current targeted min version : 16
-     */
-    @RequiresApi(Build.VERSION_CODES.M)
-    override fun getCapabilities(context: Context): MutableCollection<String> {
+    override fun getCapabilities(context: Context): MutableCollection<CharSequence> {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-        val values = mutableListOf<String>()
+        val values = mutableListOf<CharSequence>()
         if (capabilities != null) {
 
             if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
@@ -50,5 +48,13 @@ class NetMeter23 : NetMeter {
         }
 
         return values
+    }
+
+    override fun isMetered(context: Context): Boolean {
+        return true;
+    }
+
+    override fun getSignalStrength(applicationContext: Context?): CharSequence{
+        return "To_IMPLEMENTS"
     }
 }

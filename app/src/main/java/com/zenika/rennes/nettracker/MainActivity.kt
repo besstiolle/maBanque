@@ -36,13 +36,19 @@ class MainActivity : AppCompatActivity() {
 
         val onLine: Boolean = netMeter!!.isOnline(applicationContext)
 
-        val capabilities = netMeter!!.getCapabilities(applicationContext).joinToString()
+        val capabilities: String = netMeter!!.getCapabilities(applicationContext).joinToString()
+
+        val isMetered: Boolean = netMeter!!.isMetered(applicationContext)
+
+        val strength: CharSequence = netMeter!!.getSignalStrength(applicationContext)
 
 
         updateRapport("Results : \n" +
                 "> SDK Version : $sdkVersion \n" +
                 "> Access to Internet :  $onLine \n" +
-                "> Type of Connexions :  $capabilities")
+                "> Type :  $capabilities \n" +
+                "> isMetered : $isMetered \n" +
+                "> Signal Strength : $strength")
     }
 
     private fun updateRapport(textParam: CharSequence){

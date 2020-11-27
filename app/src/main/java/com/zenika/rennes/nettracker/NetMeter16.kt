@@ -2,8 +2,13 @@ package com.zenika.rennes.nettracker
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.os.Build
+import androidx.annotation.RequiresApi
 
 @Suppress("DEPRECATION")
+/*
+ * Implementation of NetMeter for API 16 -> 22
+ */
 class NetMeter16 : NetMeter {
 
     /**
@@ -15,11 +20,11 @@ class NetMeter16 : NetMeter {
         return activeNetwork?.isConnectedOrConnecting == true
     }
 
-    override fun getCapabilities(context: Context): MutableCollection<String> {
+    override fun getCapabilities(context: Context): MutableCollection<CharSequence> {
 
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = cm.activeNetworkInfo
-        val values = mutableListOf<String>()
+        val values = mutableListOf<CharSequence>()
 
         if (activeNetwork != null) {
             if(activeNetwork.type == ConnectivityManager.TYPE_MOBILE) {
@@ -34,5 +39,13 @@ class NetMeter16 : NetMeter {
         }
 
         return values
+    }
+
+    override fun isMetered(context: Context): Boolean {
+        return true;
+    }
+
+    override fun getSignalStrength(applicationContext: Context?): CharSequence{
+        return "To_IMPLEMENTS"
     }
 }
