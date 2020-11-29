@@ -30,7 +30,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun initNetMeter(){
         /* Make sure we're running on Marshmallow or higher to use NetworkCapabilities APIs */
-        netMeter = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        netMeter = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            setContentView(R.layout.activity_main_23)
+            NetMeter30()
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             setContentView(R.layout.activity_main_23)
             NetMeter23()
         } else {
@@ -38,6 +41,8 @@ class MainActivity : AppCompatActivity() {
             NetMeter16()
         }
     }
+
+
 
     private fun checkIsOnline(){
         val sdkVersion: Int = Build.VERSION.SDK_INT
@@ -66,4 +71,5 @@ class MainActivity : AppCompatActivity() {
         val textView = findViewById<View>(R.id.rapport) as TextView
         textView.text = textParam
     }
+
 }

@@ -3,6 +3,7 @@ package com.zenika.rennes.nettracker
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.wifi.WifiManager
 import android.os.Build
 import androidx.annotation.RequiresApi
 
@@ -13,10 +14,11 @@ import androidx.annotation.RequiresApi
  * Cause of usage "capabilities.hasTransport" (API 21)
  */
 @RequiresApi(Build.VERSION_CODES.M)
-class NetMeter23 : NetMeter {
+open class NetMeter23: NetMeter {
+
 
     override fun isOnline(context: Context): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager = context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
         if (capabilities != null) {
             return capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
@@ -28,7 +30,7 @@ class NetMeter23 : NetMeter {
     }
 
     override fun getCapabilities(context: Context): MutableCollection<CharSequence> {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager = context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
         val values = mutableListOf<CharSequence>()
         if (capabilities != null) {
@@ -50,7 +52,7 @@ class NetMeter23 : NetMeter {
     }
     override fun getCurrentNetwork(context: Context): CharSequence {
 
-        /*val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        /*val connectivityManager = context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         connectivityManager?.run {
             connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)?.run {
                 when {
@@ -74,6 +76,30 @@ class NetMeter23 : NetMeter {
     }
 
     override fun getSignalStrength(context: Context): CharSequence{
-        return "To_IMPLEMENTS"
+        //val currentNetwork: CharSequence = this.getCurrentNetwork(context);
+        //FIXME
+        val currentNetwork: CharSequence = this.getCapabilities(context).joinToString();
+
+        if(currentNetwork == "WIFI"){
+            val wifiManager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+
+            val numberOfLevels = 5
+            // Deprecated in API 30
+            return when (WifiManager.calculateSignalLevel(wifiManager.connectionInfo.rssi, numberOfLevels)) {
+                0 -> "none"
+                1 -> "Poor"
+                2 -> "Mediocre"
+                3 -> "Average"
+                4 -> "Good"
+                else -> "N/A"
+            }
+        } else if(currentNetwork == "CELLULAR"){
+
+            return "Cellular Need big brain time"
+        }
+
+        return "CurrentNetwork $currentNetwork not implemented"
     }
+
+
 }
