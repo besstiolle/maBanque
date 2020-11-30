@@ -1,4 +1,4 @@
-package com.zenika.rennes.nettracker
+package com.zenika.rennes.mbel
 
 import android.content.Context
 import android.net.ConnectivityManager

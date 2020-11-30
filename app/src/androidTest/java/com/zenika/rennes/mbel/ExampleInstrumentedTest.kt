@@ -1,4 +1,4 @@
-package com.zenika.rennes.nettracker
+package com.zenika.rennes.mbel
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.zenika.rennes.nettracker", appContext.packageName)
+        assertEquals("com.zenika.rennes.mbel", appContext.packageName)
     }
 }
