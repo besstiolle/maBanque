@@ -6,6 +6,10 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.zenika.rennes.mbel.NetMeter.NetMeter
+import com.zenika.rennes.mbel.NetMeter.NetMeter16
+import com.zenika.rennes.mbel.NetMeter.NetMeter23
+import com.zenika.rennes.mbel.NetMeter.NetMeter30
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,7 +17,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_stand_by)
 
         // Initiate netMeter instance
         initNetMeter()
@@ -30,15 +33,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun initNetMeter(){
         /* Make sure we're running on Marshmallow or higher to use NetworkCapabilities APIs */
-        netMeter = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            setContentView(R.layout.activity_main_23)
-            NetMeter30()
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            setContentView(R.layout.activity_main_23)
-            NetMeter23()
-        } else {
-            setContentView(R.layout.activity_main_16)
-            NetMeter16()
+        netMeter = when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
+                setContentView(R.layout.activity_main_23)
+                NetMeter30()
+            }
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
+                setContentView(R.layout.activity_main_23)
+                NetMeter23()
+            }
+            else -> {
+                setContentView(R.layout.activity_main_16)
+                NetMeter16()
+            }
         }
     }
 

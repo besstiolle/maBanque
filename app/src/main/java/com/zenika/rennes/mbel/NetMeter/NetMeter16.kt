@@ -1,4 +1,4 @@
-package com.zenika.rennes.mbel
+package com.zenika.rennes.mbel.NetMeter
 
 import android.content.Context
 import android.net.ConnectivityManager
