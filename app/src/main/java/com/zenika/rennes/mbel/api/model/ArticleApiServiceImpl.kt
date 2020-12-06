@@ -1,7 +1,5 @@
 package com.zenika.rennes.mbel.api.model
 
-import android.os.Handler
-import android.os.Looper
 import com.zenika.rennes.mbel.api.service.ApiService
 import com.zenika.rennes.mbel.api.service.ApiSingleton
 import retrofit2.Call
@@ -21,7 +19,6 @@ class ArticleApiServiceImpl() {
     fun getAllArticles(){
         val service = retrofit.create(ApiService::class.java)
         val serviceCall: Call<ArticlesWrapper> = service.getAllArticles()
-        val mHandler = Handler(Looper.getMainLooper())
 
         serviceCall.enqueue(object : Callback<ArticlesWrapper> {
             override fun onResponse(call: Call<ArticlesWrapper>,response: Response<ArticlesWrapper>) {

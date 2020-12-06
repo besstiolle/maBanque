@@ -2,23 +2,17 @@ package com.zenika.rennes.mbel
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LifecycleOwner
 import com.zenika.rennes.mbel.NetMeter.NetMeter
 import com.zenika.rennes.mbel.NetMeter.NetMeter16
 import com.zenika.rennes.mbel.NetMeter.NetMeter23
 import com.zenika.rennes.mbel.NetMeter.NetMeter30
 import com.zenika.rennes.mbel.api.model.ArticleApiServiceImpl
 import com.zenika.rennes.mbel.api.service.ApiSingleton
-import io.reactivex.Observable
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,29 +23,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // SDK 16 View by default
-    //    setContentView(R.layout.activity_main_16)
 
-        setContentView(R.layout.activity_main_23)
-        val listView = findViewById<View>(R.id.listView) as ListView
-        ApiSingleton.init(applicationContext, listView)
+        setContentView(R.layout.activity_main_all)
 
-
-        var service = ArticleApiServiceImpl()
-        service.getAllArticles()
-
-/*
-        var i=0
-        while(ApiSingleton.datas == null) {
-            Log.e("WAIT", "$i")
-            i++
-        }
-        val listView = findViewById<View>(R.id.listView) as ListView
-        val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
-            applicationContext, android.R.layout.simple_list_item_1, ApiSingleton.datas!!
-        )
-        listView.adapter = arrayAdapter*/
-/*
         // Initiate netMeter instance
         initNetMeter()
 
@@ -61,27 +35,40 @@ class MainActivity : AppCompatActivity() {
         val button: Button = findViewById(R.id.button_refresh)
         button.setOnClickListener {
             checkIsOnline()
-        }*/
+            retrieveApi()
+        }
 
+        //Populate list with data from API
+        retrieveApi()
+
+    }
+
+    private fun retrieveApi() {
+        // Initiate Singleton to retrieve easily the api.
+        // Pass some parameters like the layout to rendering : 2 or 3 datas ?
+        ApiSingleton.init(applicationContext, findViewById<View>(R.id.listView) as ListView, R.layout.article_3_points)
+        // Call the Api getAllArticles.
+        ArticleApiServiceImpl().getAllArticles()
     }
 
     private fun initNetMeter(){
         /* Make sure we're running on Marshmallow or higher to use NetworkCapabilities APIs */
         netMeter = when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
-                setContentView(R.layout.activity_main_23)
-                NetMeter30()
-            }
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
-                setContentView(R.layout.activity_main_23)
-                NetMeter23()
-            }
-            else -> {
-                setContentView(R.layout.activity_main_16)
-                NetMeter16()
-            }
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> NetMeter30()
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> NetMeter23()
+            else -> NetMeter16()
         }
     }
+
+    /**
+     * Initiate news layout with/out image if we are in wifi or not
+     *//*
+    private fun initNewsLayout(){
+        layout = when{
+            foo -> R.layout.article_3_points
+            foo -> R.layout.article_2_points
+        }
+    }*/
 
 
 

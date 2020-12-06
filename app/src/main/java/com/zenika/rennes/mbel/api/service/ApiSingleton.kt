@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.ListView
 import com.zenika.rennes.mbel.api.model.Article
 import com.zenika.rennes.mbel.api.model.ArticleArrayAdapter
+import kotlin.properties.Delegates
 
 object ApiSingleton {
 
@@ -12,20 +13,18 @@ object ApiSingleton {
         Log.e("ApiSingleton", "Singleton class invoked")
     }
 
-    var applicationContext: Context?= null
-    var listView: ListView? = null
+    private lateinit var applicationContext: Context
+    private lateinit var listView: ListView
+    private var layout by Delegates.notNull<Int>()
 
-    fun init(context: Context, view: ListView){
-        applicationContext = context
-        listView = view
+    fun init(c: Context, v: ListView, l: Int){
+        applicationContext = c
+        listView = v
+        layout = l
     }
 
     fun process(articles: List<Article>){
-        if(articles == null || applicationContext == null || listView == null){
-            Log.e("KEVIN", "int wasn't made Null")
-            return
-        }
-        listView!!.adapter = ArticleArrayAdapter(applicationContext!!, articles)
+        listView.adapter = ArticleArrayAdapter(applicationContext, articles, layout)
     }
 
 }
