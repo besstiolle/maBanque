@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     //SDK 16 by default
     private var netMeter: NetMeter = NetMeter16()
 
+    private var isWifi = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     private fun retrieveApi() {
         // Initiate Singleton to retrieve easily the api.
         // Pass some parameters like the layout to rendering : 2 or 3 datas ?
-        ApiSingleton.init(applicationContext, findViewById<View>(R.id.listView) as ListView, R.layout.article_3_points)
+        ApiSingleton.init(applicationContext, findViewById<View>(R.id.listView) as ListView, isWifi)
         // Call the Api getAllArticles.
         ArticleApiServiceImpl().getAllArticles()
     }
@@ -59,17 +61,6 @@ class MainActivity : AppCompatActivity() {
             else -> NetMeter16()
         }
     }
-
-    /**
-     * Initiate news layout with/out image if we are in wifi or not
-     *//*
-    private fun initNewsLayout(){
-        layout = when{
-            foo -> R.layout.article_3_points
-            foo -> R.layout.article_2_points
-        }
-    }*/
-
 
 
     private fun checkIsOnline(){
@@ -84,6 +75,8 @@ class MainActivity : AppCompatActivity() {
         val isMetered: Boolean = netMeter.isMetered(applicationContext)
 
         val strength: CharSequence = netMeter.getSignalStrength(applicationContext)
+
+        isWifi = currentNetwork == "WIFI" || capabilities == "WIFI"
 
 
         updateRapport(

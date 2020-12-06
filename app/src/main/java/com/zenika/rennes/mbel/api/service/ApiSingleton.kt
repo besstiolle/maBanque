@@ -4,7 +4,8 @@ import android.content.Context
 import android.util.Log
 import android.widget.ListView
 import com.zenika.rennes.mbel.api.model.Article
-import com.zenika.rennes.mbel.api.model.ArticleArrayAdapter
+import com.zenika.rennes.mbel.api.model.ArticleArrayWithImageAdapter
+import com.zenika.rennes.mbel.api.model.ArticleArrayWithoutImageAdapter
 import kotlin.properties.Delegates
 
 object ApiSingleton {
@@ -15,16 +16,18 @@ object ApiSingleton {
 
     private lateinit var applicationContext: Context
     private lateinit var listView: ListView
-    private var layout by Delegates.notNull<Int>()
+    private var isWifi by Delegates.notNull<Boolean>()
 
-    fun init(c: Context, v: ListView, l: Int){
+    fun init(c: Context, v: ListView, w: Boolean){
         applicationContext = c
         listView = v
-        layout = l
+        isWifi = w
     }
 
     fun process(articles: List<Article>){
-        listView.adapter = ArticleArrayAdapter(applicationContext, articles, layout)
+        if(isWifi) listView.adapter = ArticleArrayWithImageAdapter(applicationContext, articles)
+        else listView.adapter = ArticleArrayWithoutImageAdapter(applicationContext, articles)
     }
 
 }
+
