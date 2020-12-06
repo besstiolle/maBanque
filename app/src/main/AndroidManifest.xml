@@ -18,16 +18,20 @@
 
         <activity
             android:name=".SplashActivity" android:theme="@style/SplashTheme"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".VersionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <activity android:name=".VersionActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="Une breve question"/>
+
         <activity android:name=".MainActivity"
             android:parentActivityName=".MainActivity"
-            android:label="Welcome"/>
+            android:label="Ma Banque En Ligne"/>
 
     </application>
 
