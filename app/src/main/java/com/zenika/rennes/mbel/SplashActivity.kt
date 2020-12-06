@@ -11,6 +11,6 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val intent = Intent(this, VersionActivity::class.java)
         startActivity(intent)
-        finish()
+        finishAffinity()
     }
 }

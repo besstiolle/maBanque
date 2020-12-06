@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     private fun retrieveApi() {
         // Initiate Singleton to retrieve easily the api.
         // Pass some parameters like the layout to rendering : 2 or 3 datas ?
-        ApiSingleton.init(applicationContext, findViewById<View>(R.id.listView) as ListView, isWifi)
+        ApiSingleton.init(this, findViewById<View>(R.id.listView) as ListView, isWifi)
         // Call the Api getAllArticles.
         ArticleApiServiceImpl().getAllArticles()
     }
@@ -66,15 +66,15 @@ class MainActivity : AppCompatActivity() {
     private fun checkIsOnline(){
         val sdkVersion: Int = Build.VERSION.SDK_INT
 
-        val onLine: Boolean = netMeter.isOnline(applicationContext)
+        val onLine: Boolean = netMeter.isOnline(this)
 
-        val currentNetwork: CharSequence = netMeter.getCurrentNetwork(applicationContext)
+        val currentNetwork: CharSequence = netMeter.getCurrentNetwork(this)
 
-        val capabilities: String = netMeter.getCapabilities(applicationContext).joinToString()
+        val capabilities: String = netMeter.getCapabilities(this).joinToString()
 
-        val isMetered: Boolean = netMeter.isMetered(applicationContext)
+        val isMetered: Boolean = netMeter.isMetered(this)
 
-        val strength: CharSequence = netMeter.getSignalStrength(applicationContext)
+        val strength: CharSequence = netMeter.getSignalStrength(this)
 
         isWifi = currentNetwork == "WIFI" || capabilities == "WIFI"
 

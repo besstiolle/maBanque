@@ -14,19 +14,19 @@ object ApiSingleton {
         Log.e("ApiSingleton", "Singleton class invoked")
     }
 
-    private lateinit var applicationContext: Context
+    private lateinit var context: Context
     private lateinit var listView: ListView
     private var isWifi by Delegates.notNull<Boolean>()
 
     fun init(c: Context, v: ListView, w: Boolean){
-        applicationContext = c
+        context = c
         listView = v
         isWifi = w
     }
 
     fun process(articles: List<ArticlesDataChildren>){
-        if(isWifi) listView.adapter = ArticleArrayWithImageAdapter(applicationContext, articles)
-        else listView.adapter = ArticleArrayWithoutImageAdapter(applicationContext, articles)
+        if(isWifi) listView.adapter = ArticleArrayWithImageAdapter(context, articles)
+        else listView.adapter = ArticleArrayWithoutImageAdapter(context, articles)
     }
 
 }

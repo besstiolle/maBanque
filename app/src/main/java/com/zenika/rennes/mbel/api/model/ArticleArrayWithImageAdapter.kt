@@ -1,6 +1,8 @@
 package com.zenika.rennes.mbel.api.model
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,6 +50,9 @@ class ArticleArrayWithImageAdapter(aContext: Context, articlesData: List<Article
         holder.descriptionView.text = article.url_overridden_by_dest?:"N/A"
         Picasso.with(context).load(article.thumbnail).into(holder.iconView)
 
+        makeClickable(convertView?.findViewById(R.id.title), article.url_overridden_by_dest)
+        makeClickable(convertView?.findViewById(R.id.description), article.url_overridden_by_dest)
+
         return convertView!!
 
     }
@@ -57,4 +62,17 @@ class ArticleArrayWithImageAdapter(aContext: Context, articlesData: List<Article
         val descriptionView: TextView = d
     }
 
+    private fun makeClickable(item: View?, url: String?) {
+        if(url == null){return}
+
+        //Plug click event
+        item?.setOnClickListener {
+            try {
+                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            } catch (e: Exception){
+                e.printStackTrace()
+            }
+            //finishAffinity()
+        }
+    }
 }

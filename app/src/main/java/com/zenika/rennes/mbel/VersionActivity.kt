@@ -50,9 +50,9 @@ class VersionActivity : AppCompatActivity() {
     private fun gotoMainActivity(){
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-        finish()
+        finishAffinity()
     }
 
     private fun Context.toast(message: CharSequence) =
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
