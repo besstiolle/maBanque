@@ -11,9 +11,9 @@ import com.squareup.picasso.Picasso
 import com.zenika.rennes.mbel.R
 
 
-class ArticleArrayWithImageAdapter(aContext: Context, articles: List<Article>) : BaseAdapter() {
+class ArticleArrayWithImageAdapter(aContext: Context, articlesData: List<ArticlesDataChildren>) : BaseAdapter() {
 
-    private val listData: List<Article> = articles
+    private val listData: List<ArticlesDataChildren> = articlesData
     private val layoutInflater: LayoutInflater = LayoutInflater.from(aContext)
     private val context: Context = aContext
 
@@ -31,6 +31,7 @@ class ArticleArrayWithImageAdapter(aContext: Context, articles: List<Article>) :
     }
 
     override fun getView(position: Int, aconvertView: View?, parent: ViewGroup?): View {
+
         val holder: ViewHolder
         var convertView: View? = aconvertView
         if(convertView == null){
@@ -41,10 +42,11 @@ class ArticleArrayWithImageAdapter(aContext: Context, articles: List<Article>) :
             holder = convertView.tag as ViewHolder
         }
 
-        val article: Article = this.getItem(position) as Article
+        val articleDataChildren: ArticlesDataChildren = this.getItem(position) as ArticlesDataChildren
+        val article: Article = articleDataChildren.data
         holder.titleView.text = article.title
-        holder.descriptionView.text = article.description
-        Picasso.with(context).load(article.urlToImage).into(holder.iconView)
+        holder.descriptionView.text = article.url_overridden_by_dest?:"N/A"
+        Picasso.with(context).load(article.thumbnail).into(holder.iconView)
 
         return convertView!!
 

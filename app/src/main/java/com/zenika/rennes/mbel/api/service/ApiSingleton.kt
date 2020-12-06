@@ -3,9 +3,9 @@ package com.zenika.rennes.mbel.api.service
 import android.content.Context
 import android.util.Log
 import android.widget.ListView
-import com.zenika.rennes.mbel.api.model.Article
 import com.zenika.rennes.mbel.api.model.ArticleArrayWithImageAdapter
 import com.zenika.rennes.mbel.api.model.ArticleArrayWithoutImageAdapter
+import com.zenika.rennes.mbel.api.model.ArticlesDataChildren
 import kotlin.properties.Delegates
 
 object ApiSingleton {
@@ -24,7 +24,7 @@ object ApiSingleton {
         isWifi = w
     }
 
-    fun process(articles: List<Article>){
+    fun process(articles: List<ArticlesDataChildren>){
         if(isWifi) listView.adapter = ArticleArrayWithImageAdapter(applicationContext, articles)
         else listView.adapter = ArticleArrayWithoutImageAdapter(applicationContext, articles)
     }

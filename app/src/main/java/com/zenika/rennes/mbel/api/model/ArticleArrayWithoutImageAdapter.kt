@@ -9,9 +9,9 @@ import android.widget.TextView
 import com.zenika.rennes.mbel.R
 
 
-class ArticleArrayWithoutImageAdapter(aContext: Context, articles: List<Article>) : BaseAdapter() {
+class ArticleArrayWithoutImageAdapter(aContext: Context, articlesData: List<ArticlesDataChildren>) : BaseAdapter() {
 
-    private val listData: List<Article> = articles
+    private val listData: List<ArticlesDataChildren> = articlesData
     private val layoutInflater: LayoutInflater = LayoutInflater.from(aContext)
 
 
@@ -38,9 +38,10 @@ class ArticleArrayWithoutImageAdapter(aContext: Context, articles: List<Article>
             holder = convertView.tag as ViewHolder
         }
 
-        val article: Article = this.getItem(position) as Article
+        val articleDataChildren: ArticlesDataChildren = this.getItem(position) as ArticlesDataChildren
+        val article: Article = articleDataChildren.data
         holder.titleView.text = article.title
-        holder.descriptionView.text = article.description
+        holder.descriptionView.text = article.url_overridden_by_dest?:"N/A"
 
         return convertView!!
 

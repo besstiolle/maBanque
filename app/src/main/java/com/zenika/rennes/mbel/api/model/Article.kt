@@ -1,4 +1,8 @@
 package com.zenika.rennes.mbel.api.model
 
 
-class Article(val author: String?, val title: String?, val description: String?, val urlToImage: String?)
+
+class ArticlesWrapper(val data: ArticlesData)
+class ArticlesData(val children: List<ArticlesDataChildren>)
+class ArticlesDataChildren(val data: Article)
+class Article(val title: String?, val url_overridden_by_dest: String?, val thumbnail: String?)
