@@ -52,6 +52,7 @@ class ArticleArrayWithImageAdapter(aContext: Context, articlesData: List<Article
 
         makeClickable(convertView?.findViewById(R.id.title), article.url_overridden_by_dest)
         makeClickable(convertView?.findViewById(R.id.description), article.url_overridden_by_dest)
+        makeClickable(convertView?.findViewById(R.id.icon), article.url_overridden_by_dest)
 
         return convertView!!
 
